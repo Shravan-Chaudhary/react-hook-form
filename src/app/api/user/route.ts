@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { db } from '@/lib/db'
+import { hash } from 'bcrypt'
 
 export async function POST(req: Request) {
   try {
@@ -23,17 +24,33 @@ export async function POST(req: Request) {
       )
     }
 
+    // Hashing Password before creating user
+    const hashedPassword = await hash(password, 10)
+
     // Creating new User
     const newUser = await db.user.create({
       data: {
         name,
         email,
-        password,
+        password: hashedPassword,
       },
     })
 
-    // Where i left off: Created User, now encrypt the password using bcrypt
+    //  Removing password from response
+    const { password: newUserPassword, ...user } = newUser
 
-    return NextResponse.json(body)
-  } catch (error) {}
+    return NextResponse.json(
+      {
+        user: user,
+        message: 'User Created Successfully',
+      },
+      { status: 201 },
+    )
+  } catch (error) {
+    console.log(error)
+    return NextResponse.json(
+      { user: null, message: 'Something went wrong' },
+      { status: 500 },
+    )
+  }
 }

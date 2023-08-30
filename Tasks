@@ -4,5 +4,5 @@
 
 - Setup Prisma with mongoDB, and create a user schema
 
-- Make Create User API Route (POST)
--
+- Create Register User API Route (POST)
+  - Zod validation in Register route
