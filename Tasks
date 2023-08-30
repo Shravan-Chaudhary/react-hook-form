@@ -1,0 +1,8 @@
+- Create Next App
+- Install Shadcn UI
+- Make Sign-in Sign-up Form (with reat-hook-form and zod validation)
+
+- Setup Prisma with mongoDB, and create a user schema
+
+- Make Create User API Route (POST)
+-
